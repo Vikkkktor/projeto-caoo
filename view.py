@@ -4,8 +4,6 @@ import customtkinter as ctk
 #from controller import Controller
 
 
-
-
 class View():
     def __init__(self):
         self.root = tk.Tk()
@@ -39,70 +37,72 @@ class View():
         self.root.title("DMMA")
         self.frame1 = tk.Frame(self.background, bg="black")
         self.frame1.grid(row=0, column=0, sticky="nsew")
+        self.frame1.grid_columnconfigure(0, weight=1)
 
 
-        self.containerLoginTopo = tk.Frame(self.frame1, bg="black")
-        self.containerLoginTopo.grid(row=1, column=3, sticky="nsew")
+        self.containerTopo = tk.Frame(self.frame1, bg="black")
+        self.containerTopo.grid(row=1, column=0, sticky="nsew")
+        self.containerTopo.grid_columnconfigure(0, weight=1)
 
 
-        self.containerLoginForm = tk.Frame(self.frame1, bg="black")
-        self.containerLoginForm.grid(row=10, column=7, sticky="nsew")
+        self.containerForm = tk.Frame(self.frame1, bg="black")
+        self.containerForm.grid(row=2, column=0, sticky="nsew")
+        self.containerForm.grid_columnconfigure(0, weight=1)
+        self.containerForm.grid_columnconfigure(4, weight=1)
+
+        self.labelNomePagina = ctk.CTkLabel(self.containerTopo, text="INSIRA SEUS DADOS", fg_color="black", text_color="white", font=("Candara", 20, "bold"), justify="center" )
+        self.labelNomePagina.grid(row=0, column= 0, padx=(0, 0), pady=(60, 0))
 
 
-        self.labelNomePagina = ctk.CTkLabel(self.containerLoginTopo, text="INSIRA SEUS DADOS", fg_color="black", text_color="white", font=("Candara", 20, "bold") )
-        self.labelNomePagina.pack(pady=(0, 100))
+        self.labelAbdominais = ctk.CTkLabel(self.containerForm, text="Abdominais", fg_color="black", text_color="white")
+        self.labelAbdominais.grid(row=4, column= 1, padx=(0, 15), pady=(50, 0))
+        self.entryAbdominais = ctk.CTkEntry(self.containerForm, placeholder_text = "23", placeholder_text_color = "black", justify = "center")
+        self.entryAbdominais.grid(row=5, column= 1, padx=(0, 20), pady=(0, 30))  
 
 
-       
-        self.labelAbdominais = ctk.CTkLabel(self.containerLoginForm, text="Abdominais", fg_color="black", text_color="white")
-        self.labelAbdominais.grid(row=5, column= 0, padx=(0), pady=(0, 10), sticky='w')
-        self.entryAbdominais = ctk.CTkEntry(self.containerLoginForm, placeholder_text = "23", placeholder_text_color = "black", justify = 'center')
-        self.entryAbdominais.grid(row=6, column= 0, padx=(0), pady=(0, 10), sticky='w')  
+        self.labelArremessoMB = ctk.CTkLabel(self.containerForm, text="Arremessos MB", fg_color="black", text_color="white")
+        self.labelArremessoMB.grid(row=4, column= 2, padx=(0,15), pady=(50, 0))
+        self.entryArremessoMB = ctk.CTkEntry(self.containerForm, placeholder_text = "5,1", placeholder_text_color = "black", justify = "center")
+        self.entryArremessoMB.grid(row=5, column= 2, padx=(0, 20), pady=(0, 30))  
 
 
-        self.labelArremessoMB = ctk.CTkLabel(self.containerLoginForm, text="Arremessos MB", fg_color="black", text_color="white")
-        self.labelArremessoMB.grid(row=5, column= 1, padx=(0), pady=(0, 10), sticky='w')
-        self.entryArremessoMB = ctk.CTkEntry(self.containerLoginForm, placeholder_text = "5,1", placeholder_text_color = "black", justify = 'center')
-        self.entryArremessoMB.grid(row=6, column= 1, padx=(0), pady=(0, 10), sticky='w')  
+        self.labelFlexibilidade = ctk.CTkLabel(self.containerForm, text="Flexibilidade", fg_color="black", text_color="white")
+        self.labelFlexibilidade.grid(row=4, column= 3, padx=(0,15), pady=(50, 0))
+        self.entryFlexibilidade = ctk.CTkEntry(self.containerForm, placeholder_text = "52", placeholder_text_color = "black", justify = "center")
+        self.entryFlexibilidade.grid(row=5, column= 3, padx=(0, 20), pady=(0, 30))  
 
 
-        self.labelFlexibilidade = ctk.CTkLabel(self.containerLoginForm, text="Flexibilidade", fg_color="black", text_color="white")
-        self.labelFlexibilidade.grid(row=5, column= 2, padx=(0), pady=(0, 10), sticky='w')
-        self.entryFlexibilidade = ctk.CTkEntry(self.containerLoginForm, placeholder_text = "52", placeholder_text_color = "black", justify = 'center')
-        self.entryFlexibilidade.grid(row=6, column= 2, padx=(0), pady=(0, 10), sticky='w')  
+        self.labelSaltoVertical = ctk.CTkLabel(self.containerForm, text="Salto Vertical", fg_color="black", text_color="white")
+        self.labelSaltoVertical.grid(row=6, column= 1, padx=(0,15), pady=(0, 0))
+        self.entrySaltoVertical = ctk.CTkEntry(self.containerForm, placeholder_text = "26,5", placeholder_text_color = "black", justify = "center")
+        self.entrySaltoVertical.grid(row=7, column= 1, padx=(0, 20), pady=(0, 30))  
 
 
-        self.labelSaltoVertical = ctk.CTkLabel(self.containerLoginForm, text="Salto Vertical", fg_color="black", text_color="white")
-        self.labelSaltoVertical.grid(row=8, column= 0, padx=(0), pady=(0, 10), sticky='w')
-        self.entrySaltoVertical = ctk.CTkEntry(self.containerLoginForm, placeholder_text = "26,5", placeholder_text_color = "black", justify = 'center')
-        self.entrySaltoVertical.grid(row=9, column= 0, padx=(0), pady=(0, 10), sticky='w')  
+        self.labelSaltoHorizontal = ctk.CTkLabel(self.containerForm, text="Salto Horizontal", fg_color="black", text_color="white")
+        self.labelSaltoHorizontal.grid(row=6, column= 2, padx=(0,15), pady=(0, 0))
+        self.entrySaltoHorizontal = ctk.CTkEntry(self.containerForm, placeholder_text = "190", placeholder_text_color = "black", justify = "center")
+        self.entrySaltoHorizontal.grid(row=7, column= 2, padx=(0, 20), pady=(0, 30))  
 
 
-        self.labelSaltoHorizontal = ctk.CTkLabel(self.containerLoginForm, text="Salto Horizontal", fg_color="black", text_color="white")
-        self.labelSaltoHorizontal.grid(row=8, column= 1, padx=(0), pady=(0, 10), sticky='w')
-        self.entrySaltoHorizontal = ctk.CTkEntry(self.containerLoginForm, placeholder_text = "190", placeholder_text_color = "black", justify = 'center')
-        self.entrySaltoHorizontal.grid(row=9, column= 1, padx=(0), pady=(0, 10), sticky='w')  
+        self.labelVelociade = ctk.CTkLabel(self.containerForm, text="Velocidade", fg_color="black", text_color="white")
+        self.labelVelociade.grid(row=6, column= 3, padx=(0,15), pady=(0, 0))
+        self.entryVelocidade = ctk.CTkEntry(self.containerForm, placeholder_text = "10km/h", placeholder_text_color = "black", justify = "center")
+        self.entryVelocidade.grid(row=7, column= 3, padx=(0, 20), pady=(0, 30))  
 
 
-        self.labelVelociade = ctk.CTkLabel(self.containerLoginForm, text="Velocidade", fg_color="black", text_color="white")
-        self.labelVelociade.grid(row=8, column= 2, padx=(0), pady=(0, 10), sticky='w')
-        self.entryVelocidade = ctk.CTkEntry(self.containerLoginForm, placeholder_text = "10km/h", placeholder_text_color = "black", justify = 'center')
-        self.entryVelocidade.grid(row=9, column= 2, padx=(0), pady=(0, 10), sticky='w')  
-
-
-       # self.labelSenha = tk.Label(self.containerLoginForm, width=20, text="", bg="black", fg="#FFFFFF")
+       # self.labelSenha = tk.Label(self.containerForm, width=20, text="", bg="black", fg="#FFFFFF")
       #  self.labelSenha.pack()
 
 
-        #self.botaoEntrar = tk.Button(self.containerLoginForm, text="Entrar", width=10, bg="#FFFFFF", command="")
+        #self.botaoEntrar = tk.Button(self.containerForm, text="Entrar", width=10, bg="#FFFFFF", command="")
         #self.botaoEntrar.pack()
 
 
-        #self.labelFrase = tk.Label(self.containerLoginForm,text="Ainda não possui uma conta?",  bg="black", fg="#FFFFFF")
+        #self.labelFrase = tk.Label(self.containerForm,text="Ainda não possui uma conta?",  bg="black", fg="#FFFFFF")
        # self.labelFrase.pack(pady=(5,0))
 
 
-       # self.botaoCriarConta = tk.Button(self.containerLoginForm,
+       # self.botaoCriarConta = tk.Button(self.containerForm,
           #                          text="Criar",
        #                              width=10,  
         #                             relief="flat",
