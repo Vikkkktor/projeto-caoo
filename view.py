@@ -56,46 +56,42 @@ class View():
 
         self.labelAbdominais = ctk.CTkLabel(self.containerForm, text="Abdominais", fg_color="black", text_color="white")
         self.labelAbdominais.grid(row=4, column= 1, padx=(0, 15), pady=(50, 0))
-        self.entryAbdominais = ctk.CTkEntry(self.containerForm, placeholder_text = "23", placeholder_text_color = "black", justify = "center")
+        self.entryAbdominais = ctk.CTkEntry(self.containerForm, placeholder_text = "23", placeholder_text_color = "black", justify = "center", height=30)
         self.entryAbdominais.grid(row=5, column= 1, padx=(0, 20), pady=(0, 30))  
 
 
         self.labelArremessoMB = ctk.CTkLabel(self.containerForm, text="Arremessos MB", fg_color="black", text_color="white")
         self.labelArremessoMB.grid(row=4, column= 2, padx=(0,15), pady=(50, 0))
-        self.entryArremessoMB = ctk.CTkEntry(self.containerForm, placeholder_text = "5,1", placeholder_text_color = "black", justify = "center")
+        self.entryArremessoMB = ctk.CTkEntry(self.containerForm, placeholder_text = "5,1", placeholder_text_color = "black", justify = "center", height=30)
         self.entryArremessoMB.grid(row=5, column= 2, padx=(0, 20), pady=(0, 30))  
 
 
         self.labelFlexibilidade = ctk.CTkLabel(self.containerForm, text="Flexibilidade", fg_color="black", text_color="white")
         self.labelFlexibilidade.grid(row=4, column= 3, padx=(0,15), pady=(50, 0))
-        self.entryFlexibilidade = ctk.CTkEntry(self.containerForm, placeholder_text = "52", placeholder_text_color = "black", justify = "center")
+        self.entryFlexibilidade = ctk.CTkEntry(self.containerForm, placeholder_text = "52", placeholder_text_color = "black", justify = "center", height=30)
         self.entryFlexibilidade.grid(row=5, column= 3, padx=(0, 20), pady=(0, 30))  
 
 
         self.labelSaltoVertical = ctk.CTkLabel(self.containerForm, text="Salto Vertical", fg_color="black", text_color="white")
-        self.labelSaltoVertical.grid(row=6, column= 1, padx=(0,15), pady=(0, 0))
-        self.entrySaltoVertical = ctk.CTkEntry(self.containerForm, placeholder_text = "26,5", placeholder_text_color = "black", justify = "center")
+        self.labelSaltoVertical.grid(row=6, column= 1, padx=(0,15))
+        self.entrySaltoVertical = ctk.CTkEntry(self.containerForm, placeholder_text = "26,5", placeholder_text_color = "black", justify = "center", height=30)
         self.entrySaltoVertical.grid(row=7, column= 1, padx=(0, 20), pady=(0, 30))  
 
 
         self.labelSaltoHorizontal = ctk.CTkLabel(self.containerForm, text="Salto Horizontal", fg_color="black", text_color="white")
-        self.labelSaltoHorizontal.grid(row=6, column= 2, padx=(0,15), pady=(0, 0))
-        self.entrySaltoHorizontal = ctk.CTkEntry(self.containerForm, placeholder_text = "190", placeholder_text_color = "black", justify = "center")
+        self.labelSaltoHorizontal.grid(row=6, column= 2, padx=(0,15))
+        self.entrySaltoHorizontal = ctk.CTkEntry(self.containerForm, placeholder_text = "190", placeholder_text_color = "black", justify = "center", height=30)
         self.entrySaltoHorizontal.grid(row=7, column= 2, padx=(0, 20), pady=(0, 30))  
 
 
         self.labelVelociade = ctk.CTkLabel(self.containerForm, text="Velocidade", fg_color="black", text_color="white")
-        self.labelVelociade.grid(row=6, column= 3, padx=(0,15), pady=(0, 0))
-        self.entryVelocidade = ctk.CTkEntry(self.containerForm, placeholder_text = "10km/h", placeholder_text_color = "black", justify = "center")
+        self.labelVelociade.grid(row=6, column= 3, padx=(0,15))
+        self.entryVelocidade = ctk.CTkEntry(self.containerForm, placeholder_text = "10km/h", placeholder_text_color = "black", justify = "center", height=30)
         self.entryVelocidade.grid(row=7, column= 3, padx=(0, 20), pady=(0, 30))  
 
 
-       # self.labelSenha = tk.Label(self.containerForm, width=20, text="", bg="black", fg="#FFFFFF")
-      #  self.labelSenha.pack()
-
-
-        #self.botaoEntrar = tk.Button(self.containerForm, text="Entrar", width=10, bg="#FFFFFF", command="")
-        #self.botaoEntrar.pack()
+        self.botaoEnviar = ctk.CTkButton(self.containerForm, text="Entrar", width=100, height=30, text_color="#FFFFFF", command="")
+        self.botaoEnviar.grid(row=8, column=2, pady=(50))
 
 
         #self.labelFrase = tk.Label(self.containerForm,text="Ainda não possui uma conta?",  bg="black", fg="#FFFFFF")
