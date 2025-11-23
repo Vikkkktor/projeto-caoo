@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import  ttk, messagebox
 import customtkinter as ctk
+from PIL import Image
 #from controller import Controller
 
 
@@ -12,14 +13,14 @@ class View():
         #self.controller = Controller(self)
 
 
-        self.background = tk.Frame(self.root, bg="black")
+        self.background = ctk.CTkFrame(self.root, fg_color="black")
         self.background.pack(fill=tk.BOTH, expand=True)
         self.background.grid_rowconfigure(0, weight=1)
         self.background.grid_columnconfigure(0, weight=1)
 
 
         self.telaInsercaoDados()
-        #self.telaCadastro()
+        self.telaDeResultado("gif")
        # self.telaDeEscolha()
        # self.telaDespensa()
        # self.telaReceitas()
@@ -32,20 +33,20 @@ class View():
         self.root.mainloop()
 
 
-# tela de login e relacionados
+# tela inicial/de inserção 
     def telaInsercaoDados(self):
         self.root.title("DMMA")
-        self.frame1 = tk.Frame(self.background, bg="black")
+        self.frame1 = ctk.CTkFrame(self.background, fg_color="black")
         self.frame1.grid(row=0, column=0, sticky="nsew")
         self.frame1.grid_columnconfigure(0, weight=1)
 
 
-        self.containerTopo = tk.Frame(self.frame1, bg="black")
+        self.containerTopo = ctk.CTkFrame(self.frame1, fg_color="black")
         self.containerTopo.grid(row=1, column=0, sticky="nsew")
         self.containerTopo.grid_columnconfigure(0, weight=1)
 
 
-        self.containerForm = tk.Frame(self.frame1, bg="black")
+        self.containerForm = ctk.CTkFrame(self.frame1, fg_color="black")
         self.containerForm.grid(row=2, column=0, sticky="nsew")
         self.containerForm.grid_columnconfigure(0, weight=1)
         self.containerForm.grid_columnconfigure(4, weight=1)
@@ -90,33 +91,89 @@ class View():
         self.entryVelocidade.grid(row=7, column= 3, padx=(0, 20), pady=(0, 30))  
 
 
-        self.botaoEnviar = ctk.CTkButton(self.containerForm, text="Entrar", width=100, height=30, text_color="#FFFFFF", command="")
+        self.botaoEnviar = ctk.CTkButton(self.containerForm, text="Enviar", width=100, height=30, text_color="#FFFFFF", command=self.mostrarTelaDeResultado)
         self.botaoEnviar.grid(row=8, column=2, pady=(50))
-
-
-        #self.labelFrase = tk.Label(self.containerForm,text="Ainda não possui uma conta?",  bg="black", fg="#FFFFFF")
-       # self.labelFrase.pack(pady=(5,0))
-
-
-       # self.botaoCriarConta = tk.Button(self.containerForm,
-          #                          text="Criar",
-       #                              width=10,  
-        #                             relief="flat",
-        #                             bg="black",
-        #                             activebackground="black",
-        #                             bd=0,
-        #                             fg="#90D6FF",
-        #                             command="")
-       # self.botaoCriarConta.pack()
-
-
 
 
     def mostrarTelaInsercaoDados(self):
         self.frame1.tkraise()
         self.root.geometry("800x500")
 
+    
+    def carregarGif(self, gif):
+        self.gif = "charles-oliveira-ufc.gif"
+        self.meta = Image.open(self.gif)
 
+        self.frames = self.meta.n_frames
+
+        self.imagens = []
+        for i in range(self.frames):
+            self.obj = tk.PhotoImage(file=self.gif, format=f"gif -index {i}")
+            self.imagens.append(self.obj)
+
+
+    def animacao(self, frameAtual=0):
+        self.imagem = self.imagens[frameAtual]
+
+        self.labelGif.configure(image=self.imagem)
+        self.frameAtual = frameAtual + 1
+
+        if self.frameAtual == self.frames:
+            self.frameAtual = 0
+
+        self.loop = self.root.after(40, lambda: self.animacao(self.frameAtual))
+
+
+    def telaDeResultado(self, gif):
+        self.frame2 = ctk.CTkFrame(self.background, fg_color="black")
+        self.frame2.grid(row=0, column=0, sticky="nsew")
+        self.frame2.grid_columnconfigure(0, weight=1)
+        self.frame2.grid_rowconfigure(0, weight=0)
+        self.frame2.grid_rowconfigure(1, weight=0)
+        self.frame2.grid_rowconfigure(2, weight=0)
+        self.frame2.grid_rowconfigure(3, weight=1)
+        self.frame2.grid_rowconfigure(4, weight=0)
+
+        self.containerTopo = ctk.CTkFrame(self.frame2, fg_color="black")
+        self.containerTopo.grid(row=0, column=0, sticky="nsew")
+
+        self.containerGif = tk.Frame(self.frame2, bg="black")
+        self.containerGif.grid(row=1, column=0, sticky="nsew")
+
+        self.containerArteMarcial = ctk.CTkFrame(self.frame2, fg_color="black")
+        self.containerArteMarcial.grid(row=2, column=0, sticky="nsew")
+
+        self.containerBotao = ctk.CTkFrame(self.frame2, fg_color="black")
+        self.containerBotao.grid(row=4, column=0, sticky="se")
+        
+        self.labelNomePagina = ctk.CTkLabel(self.containerTopo, 
+         text="Sua área recomendada é o *AREA RECOMENDADA*",
+         fg_color="black", 
+         text_color="white", 
+         font=("Candara", 20, "bold"),
+         justify="center" )
+        self.labelNomePagina.pack(pady=(40))
+
+        self.labelGif = tk.Label(self.containerGif, bg="black")
+        self.labelGif.pack(pady=(0,40))
+
+        self.carregarGif(gif)
+        self.animacao()
+    
+        self.labelArteMarcial = ctk.CTkLabel(self.containerArteMarcial, 
+         text="Arte Marcial: *ARTE MARCIAL RECOMENDADA*", 
+         fg_color="black", 
+         text_color="white", 
+         font=("Candara", 20, "bold"), 
+         justify="center" )
+        self.labelArteMarcial.pack()
+
+        self.botaoGrafico = ctk.CTkButton(self.containerBotao, text="Grafico", width=100, height=30, text_color="#FFFFFF", command="")
+        self.botaoGrafico.pack()
+
+    def mostrarTelaDeResultado(self):
+        self.frame2.tkraise()
+        self.root.geometry("800x500")
 
 
   #  def efetuarLogin(self):
@@ -129,23 +186,23 @@ class View():
 
 # tela de cadastro e relacionados
     """def telaCadastro(self):
-        self.frame2 = tk.Frame(self.background, bg="black")
+        self.frame2 = ctk.CTkFrame(self.background, fg_color="black")
         self.frame2.grid(row=0, column=0, sticky="nsew")
 
 
-        self.containerCadastroTopo = tk.Frame(self.frame2, bg="black")
+        self.containerCadastroTopo = ctk.CTkFrame(self.frame2, fg_color="black")
         self.containerCadastroTopo.pack(fill=tk.X, expand=True)
 
 
-        self.containerCadastroForm = tk.Frame(self.frame2, bg="black")
+        self.containerCadastroForm = ctk.CTkFrame(self.frame2, fg_color="black")
         self.containerCadastroForm.pack(fill=tk.BOTH, expand=True)
 
 
-        self.labelNomePagina = tk.Label(self.containerCadastroTopo, text="Cadastre-se", bg="black", fg="white")
+        self.labelNomePagina = tk.Label(self.containerCadastroTopo, text="Cadastre-se", fg_color="black", fg="white")
         self.labelNomePagina.pack()
 
 
-        self.labelNomeUsuario = tk.Label(self.containerCadastroForm,width=20, text="Nome de Usuário", bg="black", fg="#FFFFFF")
+        self.labelNomeUsuario = tk.Label(self.containerCadastroForm,width=20, text="Nome de Usuário", fg_color="black", fg="#FFFFFF")
         self.labelNomeUsuario.pack()    
 
 
@@ -153,7 +210,7 @@ class View():
         self.entryNomeUsuario.pack(pady=(0,5))
 
 
-        self.labelEmail = tk.Label(self.containerCadastroForm,width=20, text="Email", bg="black", fg="#FFFFFF")
+        self.labelEmail = tk.Label(self.containerCadastroForm,width=20, text="Email", fg_color="black", fg="#FFFFFF")
         self.labelEmail.pack()    
 
 
@@ -161,7 +218,7 @@ class View():
         self.entryEmailCadastro.pack(pady=(0,5))  
 
 
-        self.labelSenha = tk.Label(self.containerCadastroForm,width=20, text="Senha", bg="black", fg="#FFFFFF")
+        self.labelSenha = tk.Label(self.containerCadastroForm,width=20, text="Senha", fg_color="black", fg="#FFFFFF")
         self.labelSenha.pack()
 
 
@@ -196,19 +253,19 @@ class View():
 
 # tela de escolha e relacionados
     def telaDeEscolha(self):
-        self.frame3 = tk.Frame(self.background, bg="black")
+        self.frame3 = ctk.CTkFrame(self.background, fg_color="black")
         self.frame3.grid(row=0, column=0, sticky="nsew")
 
 
-        self.containerTopo = tk.Frame(self.frame3, bg="black")
+        self.containerTopo = ctk.CTkFrame(self.frame3, fg_color="black")
         self.containerTopo.pack(fill=tk.X, expand=True)
 
 
-        self.containerBotoes = tk.Frame(self.frame3, bg="black")
+        self.containerBotoes = ctk.CTkFrame(self.frame3, fg_color="black")
         self.containerBotoes.pack(fill=tk.BOTH, expand=True)
 
 
-        self.labelBoasVindas = tk.Label(self.containerTopo, text=" ", bg="black", fg="white", font=(20) )
+        self.labelBoasVindas = tk.Label(self.containerTopo, text=" ", fg_color="black", fg="white", font=(20) )
         self.labelBoasVindas.pack()
 
 
@@ -247,18 +304,18 @@ class View():
 
 # tela despensa e relacionados
     def telaDespensa(self):
-        self.frame4 = tk.Frame(self.background, bg="black")
+        self.frame4 = ctk.CTkFrame(self.background, fg_color="black")
         self.frame4.grid(row=0, column=0, sticky="nsew")
 
 
-        self.containerTopo = tk.Frame(self.frame4, bg="black")
+        self.containerTopo = ctk.CTkFrame(self.frame4, fg_color="black")
         self.containerTopo.pack(fill=tk.X, side=tk.TOP)
 
 
-        self.containerAdicionarIngredientes = tk.Frame(self.frame4, bg="black")
+        self.containerAdicionarIngredientes = ctk.CTkFrame(self.frame4, fg_color="black")
         self.containerAdicionarIngredientes.pack(anchor="n", fill=tk.BOTH, pady=(2,0))
        
-        self.containerIngredientesSalvos = tk.Frame(self.frame4, bg="black")
+        self.containerIngredientesSalvos = ctk.CTkFrame(self.frame4, fg_color="black")
         self.containerIngredientesSalvos.pack(fill=tk.BOTH, expand=True)
 
 
@@ -266,7 +323,7 @@ class View():
                                     text="⟵",
                                     font=(20),
                                     relief="flat",
-                                    bg="black",
+                                    fg_color="black",
                                     activebackground="black",
                                     bd=0,
                                     highlightthickness=0,
@@ -275,11 +332,11 @@ class View():
         self.botaoVoltar.pack(side=tk.LEFT)
 
 
-        self.labelNomePagina = tk.Label(self.containerTopo, text="Despensa", bg="black", fg="white", font=(20))
+        self.labelNomePagina = tk.Label(self.containerTopo, text="Despensa", fg_color="black", fg="white", font=(20))
         self.labelNomePagina.pack()
 
 
-        self.labelNomeIngrediente = tk.Label(self.containerAdicionarIngredientes,width=17, text="Nome do Ingrediente:", bg="black",fg="#FFFFFF", font=(5))
+        self.labelNomeIngrediente = tk.Label(self.containerAdicionarIngredientes,width=17, text="Nome do Ingrediente:", fg_color="black",fg="#FFFFFF", font=(5))
         self.labelNomeIngrediente.pack(pady=(30,0), padx=(100,0), side="left", anchor="n")
 
 
@@ -287,7 +344,7 @@ class View():
         self.entryNomeIngrediente.pack(pady=(33, 0), padx=10,side="left", anchor="n")
 
 
-        self.labelQtdIngrediente = tk.Label(self.containerAdicionarIngredientes,width=5, text="QTD:", bg="black", fg="#FFFFFF", font=(5))
+        self.labelQtdIngrediente = tk.Label(self.containerAdicionarIngredientes,width=5, text="QTD:", fg_color="black", fg="#FFFFFF", font=(5))
         self.labelQtdIngrediente.pack(pady=(30,0), side="left", anchor="n")
 
 
@@ -305,11 +362,11 @@ class View():
         self.botaoAdicionar.pack(pady=(30, 0), padx=(0, 100))
 
 
-        self.labelIngredientes = tk.Label(self.containerIngredientesSalvos, text="Ingredientes Salvos", bg="black", fg="white", font=(20))
+        self.labelIngredientes = tk.Label(self.containerIngredientesSalvos, text="Ingredientes Salvos", fg_color="black", fg="white", font=(20))
         self.labelIngredientes.pack(pady=(50,0))
 
 
-        self.containerIngredientesSalvos = tk.Frame(self.containerIngredientesSalvos, bg="black")
+        self.containerIngredientesSalvos = ctk.CTkFrame(self.containerIngredientesSalvos, fg_color="black")
         self.containerIngredientesSalvos.pack(pady=(25,0), anchor="center")
 
 
@@ -346,7 +403,7 @@ class View():
 
 
     def ingredientesSalvosFormat(self, nomeIngrediente, qtdIngrediente):
-        linha = tk.Frame(self.containerIngredientesSalvos, bg="black")
+        linha = ctk.CTkFrame(self.containerIngredientesSalvos, fg_color="black")
         linha.pack(fill=tk.X, pady=2, padx=20)
 
 
@@ -354,15 +411,15 @@ class View():
         linha.columnconfigure(1, weight=0)
         linha.columnconfigure(2, weight=0)
        
-        labelIngredientesSalvosNome = tk.Label(linha, text=nomeIngrediente, bg="black", fg="white", font=(15), anchor="w")
+        labelIngredientesSalvosNome = tk.Label(linha, text=nomeIngrediente, fg_color="black", fg="white", font=(15), anchor="w")
         labelIngredientesSalvosNome.grid(row=0, column=0, sticky="w")
-        labelIngredientesSalvosQuantidade = tk.Label(linha, text=str(qtdIngrediente), bg="black", fg="white", font=(15))
+        labelIngredientesSalvosQuantidade = tk.Label(linha, text=str(qtdIngrediente), fg_color="black", fg="white", font=(15))
         labelIngredientesSalvosQuantidade.grid(row=0, column=1, padx=100)
 
 
         botaoRemover = tk.Button(linha,
                                 text="X",
-                                bg="red",
+                                fg_color="red",
                                 fg="white",
                                 width=2,
                                 command=lambda nomeIngredienteRemovido=nomeIngrediente: self.removerIngrediente(nomeIngredienteRemovido)
@@ -373,7 +430,7 @@ class View():
 
 
     def mostrarDespensaVazia(self):
-        labelVazio = tk.Label(self.containerIngredientesSalvos, text="Nenhum Ingrediente Salvo!", bg="black", fg="white", font=(20))
+        labelVazio = tk.Label(self.containerIngredientesSalvos, text="Nenhum Ingrediente Salvo!", fg_color="black", fg="white", font=(20))
         labelVazio.pack()
 
 
@@ -386,15 +443,15 @@ class View():
 
 # tela de receitas e relacionados
     def telaReceitas(self):
-        self.frame5 = tk.Frame(self.background, bg="black")
+        self.frame5 = ctk.CTkFrame(self.background, fg_color="black")
         self.frame5.grid(row=0, column=0, sticky="nsew")
 
 
-        self.containerTopo = tk.Frame(self.frame5, bg="black")
+        self.containerTopo = ctk.CTkFrame(self.frame5, fg_color="black")
         self.containerTopo.pack(fill=tk.X, side=tk.TOP)
 
 
-        self.containerReceitas = tk.Frame(self.frame5, bg="black")
+        self.containerReceitas = ctk.CTkFrame(self.frame5, fg_color="black")
         self.containerReceitas.pack(fill=tk.BOTH, expand=True)
 
 
@@ -402,7 +459,7 @@ class View():
                                     text="⟵",
                                     font=(20),
                                     relief="flat",
-                                    bg="black",
+                                    fg_color="black",
                                     activebackground="black",
                                     bd=0,
                                     highlightthickness=0,
@@ -468,19 +525,19 @@ class View():
 
 
     def telaModoPreparo(self):
-        self.frame6 = tk.Frame(self.background, bg="black")
+        self.frame6 = ctk.CTkFrame(self.background, fg_color="black")
         self.frame6.grid(row=0, column=0, sticky="nsew")
 
 
-        self.containerTopo = tk.Frame(self.frame6, bg="black")
+        self.containerTopo = ctk.CTkFrame(self.frame6, fg_color="black")
         self.containerTopo.pack(fill=tk.X, side=tk.TOP)
 
 
-        self.containerIngredientesUsados = tk.Frame(self.frame6, bg="black")
+        self.containerIngredientesUsados = ctk.CTkFrame(self.frame6, fg_color="black")
         self.containerIngredientesUsados.pack(fill=tk.X)
 
 
-        self.containerModoPreparo = tk.Frame(self.frame6, bg="black")
+        self.containerModoPreparo = ctk.CTkFrame(self.frame6, fg_color="black")
         self.containerModoPreparo.pack(fill=tk.BOTH, expand=True)
 
 
@@ -488,7 +545,7 @@ class View():
                                     text="⟵",
                                     font=(20),
                                     relief="flat",
-                                    bg="black",
+                                    fg_color="black",
                                     activebackground="black",
                                     bd=0,
                                     highlightthickness=0,
@@ -497,15 +554,15 @@ class View():
         self.botaoVoltar.pack(side=tk.LEFT)
 
 
-        self.labelNomeReceita = tk.Label(self.containerTopo, text="", bg="black", fg="white", font= ("bold",15))
+        self.labelNomeReceita = tk.Label(self.containerTopo, text="", fg_color="black", fg="white", font= ("bold",15))
         self.labelNomeReceita.pack()    
 
 
-        self.labelIngredientesUsados = tk.Label(self.containerIngredientesUsados, text="", bg="black", fg="white", font=(10))
+        self.labelIngredientesUsados = tk.Label(self.containerIngredientesUsados, text="", fg_color="black", fg="white", font=(10))
         self.labelIngredientesUsados.pack(pady=10)  
 
 
-        self.textModoPreparo = tk.Text(self.containerModoPreparo, bg="black", fg="white", font=(10),wrap="word",bd=0,highlightthickness=0,relief="flat")
+        self.textModoPreparo = tk.Text(self.containerModoPreparo, fg_color="black", fg="white", font=(10),wrap="word",bd=0,highlightthickness=0,relief="flat")
         self.textModoPreparo.pack(side=tk.LEFT,fill=tk.BOTH, expand=True)  
 
 
