@@ -65,6 +65,12 @@ class View():
         self.entryFlexibilidade = ctk.CTkEntry(self.containerForm, placeholder_text = "52", placeholder_text_color = "black", justify = "center", height=30)
         self.entryFlexibilidade.grid(row=5, column= 3, padx=(0, 20), pady=(0, 30))  
 
+       
+        self.labelVelociade = ctk.CTkLabel(self.containerForm, text="Velocidade", fg_color="black", text_color="white")
+        self.labelVelociade.grid(row=6, column= 3, padx=(0,15))
+        self.entryVelocidade = ctk.CTkEntry(self.containerForm, placeholder_text = "10km/h", placeholder_text_color = "black", justify = "center", height=30)
+        self.entryVelocidade.grid(row=7, column= 3, padx=(0, 20), pady=(0, 30))  
+
 
         self.labelSaltoVertical = ctk.CTkLabel(self.containerForm, text="Salto Vertical", fg_color="black", text_color="white")
         self.labelSaltoVertical.grid(row=6, column= 1, padx=(0,15))
@@ -76,12 +82,6 @@ class View():
         self.labelSaltoHorizontal.grid(row=6, column= 2, padx=(0,15))
         self.entrySaltoHorizontal = ctk.CTkEntry(self.containerForm, placeholder_text = "190", placeholder_text_color = "black", justify = "center", height=30)
         self.entrySaltoHorizontal.grid(row=7, column= 2, padx=(0, 20), pady=(0, 30))  
-
-
-        self.labelVelociade = ctk.CTkLabel(self.containerForm, text="Velocidade", fg_color="black", text_color="white")
-        self.labelVelociade.grid(row=6, column= 3, padx=(0,15))
-        self.entryVelocidade = ctk.CTkEntry(self.containerForm, placeholder_text = "10km/h", placeholder_text_color = "black", justify = "center", height=30)
-        self.entryVelocidade.grid(row=7, column= 3, padx=(0, 20), pady=(0, 30))  
 
 
         self.botaoEnviar = ctk.CTkButton(self.containerForm, text="Enviar", width=100, height=30, text_color="#FFFFFF", command=self.controller.enviarDados)
@@ -169,7 +169,7 @@ class View():
         self.root.geometry("800x500")
 
     def enviarDados(self):
-        return self.entryAbdominais.get(), self.entryArremessoMB.get(), self.entryFlexibilidade.get(), self.entrySaltoHorizontal.get(), self.entrySaltoVertical.get(), self.entryVelocidade.get()
+        return self.entryAbdominais.get(), self.entryArremessoMB.get(), self.entryFlexibilidade.get(), self.entryVelocidade.get(), self.entrySaltoHorizontal.get(), self.entrySaltoVertical.get()
 
 
 View()

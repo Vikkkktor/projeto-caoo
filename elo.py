@@ -8,11 +8,11 @@ class Elo:
         self.next = next
 
     @abstractmethod
-    def proc(self, data):
+    def processamento(self, data):
         pass
 
     def run(self, data):
-        data = self.proc(data)
+        data = self.processamento(data)
 
         if self.next is not None:
             return self.next.run(data)
