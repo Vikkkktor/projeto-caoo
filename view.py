@@ -2,14 +2,14 @@ import tkinter as tk
 from tkinter import  ttk, messagebox
 import customtkinter as ctk
 from PIL import Image
-#from controller import Controller
+from controller import Controller
 
 
 class View():
     def __init__(self):
         self.root = tk.Tk()
 
-        #self.controller = Controller(self)
+        self.controller = Controller(self)
 
 
         self.background = ctk.CTkFrame(self.root, fg_color="black")
@@ -84,7 +84,7 @@ class View():
         self.entryVelocidade.grid(row=7, column= 3, padx=(0, 20), pady=(0, 30))  
 
 
-        self.botaoEnviar = ctk.CTkButton(self.containerForm, text="Enviar", width=100, height=30, text_color="#FFFFFF", command=self.mostrarTelaDeResultado)
+        self.botaoEnviar = ctk.CTkButton(self.containerForm, text="Enviar", width=100, height=30, text_color="#FFFFFF", command=self.controller.enviarDados)
         self.botaoEnviar.grid(row=8, column=2, pady=(50))
 
 
@@ -169,12 +169,7 @@ class View():
         self.root.geometry("800x500")
 
     def enviarDados(self):
-        return self.entryAbdominais.get(), 
-        self.entryArremessoMB.get(), 
-        self.entryFlexibilidade.get(), 
-        self.entrySaltoHorizontal.get(),
-        self.entrySaltoVertical.get(),
-        self.entryVelocidade.get()
+        return self.entryAbdominais.get(), self.entryArremessoMB.get(), self.entryFlexibilidade.get(), self.entrySaltoHorizontal.get(), self.entrySaltoVertical.get(), self.entryVelocidade.get()
 
 
 View()
