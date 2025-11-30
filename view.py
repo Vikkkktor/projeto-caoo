@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import  ttk, messagebox
 import customtkinter as ctk
-from PIL import Image
+from PIL import Image, ImageSequence, ImageTk
 from controller import Controller
 
 
@@ -19,7 +19,7 @@ class View():
 
 
         self.telaInsercaoDados()
-        self.telaDeResultado("gif")
+        self.telaDeResultado()
 
         self.mostrarTelaInsercaoDados()
 
@@ -67,21 +67,21 @@ class View():
 
        
         self.labelVelociade = ctk.CTkLabel(self.containerForm, text="Velocidade", fg_color="black", text_color="white")
-        self.labelVelociade.grid(row=6, column= 3, padx=(0,15))
+        self.labelVelociade.grid(row=6, column= 1, padx=(0,15))
         self.entryVelocidade = ctk.CTkEntry(self.containerForm, placeholder_text = "10km/h", placeholder_text_color = "black", justify = "center", height=30)
-        self.entryVelocidade.grid(row=7, column= 3, padx=(0, 20), pady=(0, 30))  
+        self.entryVelocidade.grid(row=7, column= 1, padx=(0, 20), pady=(0, 30))  
 
 
         self.labelSaltoVertical = ctk.CTkLabel(self.containerForm, text="Salto Vertical", fg_color="black", text_color="white")
-        self.labelSaltoVertical.grid(row=6, column= 1, padx=(0,15))
+        self.labelSaltoVertical.grid(row=6, column= 2, padx=(0,15))
         self.entrySaltoVertical = ctk.CTkEntry(self.containerForm, placeholder_text = "26,5", placeholder_text_color = "black", justify = "center", height=30)
-        self.entrySaltoVertical.grid(row=7, column= 1, padx=(0, 20), pady=(0, 30))  
+        self.entrySaltoVertical.grid(row=7, column= 2, padx=(0, 20), pady=(0, 30))  
 
 
         self.labelSaltoHorizontal = ctk.CTkLabel(self.containerForm, text="Salto Horizontal", fg_color="black", text_color="white")
-        self.labelSaltoHorizontal.grid(row=6, column= 2, padx=(0,15))
+        self.labelSaltoHorizontal.grid(row=6, column= 3, padx=(0,15))
         self.entrySaltoHorizontal = ctk.CTkEntry(self.containerForm, placeholder_text = "190", placeholder_text_color = "black", justify = "center", height=30)
-        self.entrySaltoHorizontal.grid(row=7, column= 2, padx=(0, 20), pady=(0, 30))  
+        self.entrySaltoHorizontal.grid(row=7, column= 3, padx=(0, 20), pady=(0, 30))  
 
 
         self.botaoEnviar = ctk.CTkButton(self.containerForm, text="Enviar", width=100, height=30, text_color="#FFFFFF", command=self.controller.enviarDados)
@@ -92,32 +92,9 @@ class View():
         self.frame1.tkraise()
         self.root.geometry("800x500")
 
-    
-    def carregarGif(self, gif):
-        self.gif = "gifs/charles-oliveira-ufc.gif"
-        self.meta = Image.open(self.gif)
-
-        self.frames = self.meta.n_frames
-
-        self.imagens = []
-        for i in range(self.frames):
-            self.obj = tk.PhotoImage(file=self.gif, format=f"gif -index {i}")
-            self.imagens.append(self.obj)
 
 
-    def animacao(self, frameAtual=0):
-        self.imagem = self.imagens[frameAtual]
-
-        self.labelGif.configure(image=self.imagem)
-        self.frameAtual = frameAtual + 1
-
-        if self.frameAtual == self.frames:
-            self.frameAtual = 0
-
-        self.loop = self.root.after(40, lambda: self.animacao(self.frameAtual))
-
-
-    def telaDeResultado(self, gif):
+    def telaDeResultado(self):
         self.frame2 = ctk.CTkFrame(self.background, fg_color="black")
         self.frame2.grid(row=0, column=0, sticky="nsew")
         self.frame2.grid_columnconfigure(0, weight=1)
@@ -139,22 +116,19 @@ class View():
         self.containerBotao = ctk.CTkFrame(self.frame2, fg_color="black")
         self.containerBotao.grid(row=4, column=0, sticky="se")
         
-        self.labelNomePagina = ctk.CTkLabel(self.containerTopo, 
-         text="Sua área recomendada é o *AREA RECOMENDADA*",
+        self.labelAreaRecomendada = ctk.CTkLabel(self.containerTopo, 
+         text="",
          fg_color="black", 
          text_color="white", 
          font=("Candara", 20, "bold"),
          justify="center" )
-        self.labelNomePagina.pack(pady=(40))
+        self.labelAreaRecomendada.pack(pady=(40))
 
         self.labelGif = tk.Label(self.containerGif, bg="black")
         self.labelGif.pack(pady=(0,40))
 
-        self.carregarGif(gif)
-        self.animacao()
-    
         self.labelArteMarcial = ctk.CTkLabel(self.containerArteMarcial, 
-         text="Arte Marcial: *ARTE MARCIAL RECOMENDADA*", 
+         text="", 
          fg_color="black", 
          text_color="white", 
          font=("Candara", 20, "bold"), 
@@ -164,9 +138,48 @@ class View():
         self.botaoGrafico = ctk.CTkButton(self.containerBotao, text="Grafico", width=100, height=30, text_color="#FFFFFF", command="")
         self.botaoGrafico.pack()
 
+
+    def atualizarPagina(self, estilo, arteMarcial, caminhoGif):
+        self.labelAreaRecomendada.configure(text=f"Sua área recomendada é o {estilo}")
+        self.labelArteMarcial.configure(text=f"Arte Marcial: {arteMarcial}")
+        self.carregarGif(caminhoGif)
+        self.mostrarTelaDeResultado()
+
+    def carregarGif(self, gif):
+        self.gif = gif
+        self.frames = Image.open(self.gif)
+
+        self.imagens = []
+        for frame in ImageSequence.Iterator(self.frames):
+            frame = frame.convert("RGBA")
+            frame = frame.resize((350, 250))
+
+            imagem = ImageTk.PhotoImage(frame)
+            self.imagens.append(imagem)
+            
+        self.frames = len(self.imagens)
+
+        if self.frames > 0:
+            self.animacao(0)
+
+
+    def animacao(self, frameAtual=0):
+            self.imagem = self.imagens[frameAtual]
+
+            self.labelGif.configure(image=self.imagem)
+            self.frameAtual = frameAtual + 1
+
+            if self.frameAtual == self.frames:
+                self.frameAtual = 0
+
+            self.loop = self.root.after(40, lambda: self.animacao(self.frameAtual))
+
+
+
     def mostrarTelaDeResultado(self):
         self.frame2.tkraise()
         self.root.geometry("800x500")
+
 
     def enviarDados(self):
         return self.entryAbdominais.get(), self.entryArremessoMB.get(), self.entryFlexibilidade.get(), self.entryVelocidade.get(), self.entrySaltoHorizontal.get(), self.entrySaltoVertical.get()
