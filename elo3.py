@@ -13,10 +13,10 @@ class Elo3(Elo):
             self.estiloSugerido = "Grappling"
         elif self.arteMarcialSugerida == "Boxe":
             self.caminhoGif = "gifs/poatan.gif"      
-            self.estiloSugerido = "Stricking"
+            self.estiloSugerido = "Striking"
         elif self.arteMarcialSugerida == "Muay Thai/Karate":
             self.caminhoGif = "gifs/prates.gif"
-            self.estiloSugerido = "Stricking"
+            self.estiloSugerido = "Striking"
 
 
         return self.arteMarcialSugerida, self.estiloSugerido, self.caminhoGif

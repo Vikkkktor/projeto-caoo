@@ -10,9 +10,7 @@ class Elo2(Elo):
         vetorSG = self.model.escala.transform([razaoUsuario])
         grupoSG = self.model.kmeansGeral.predict(vetorSG)[0]
 
-        if grupoSG == self.model.idGrappler:
-              print("Perfil Detectado: Grappler")
-              
+        if grupoSG == self.model.idGrappler:              
               vetorGrappler = self.model.escalaGrappler.transform([razaoUsuario])
               subGrupo = self.model.kmeansGrappler.predict(vetorGrappler)[0]
               
@@ -21,9 +19,7 @@ class Elo2(Elo):
               else:
                   resultadoFinal = "Jiu-Jitsu"
           
-        else:
-              print("Perfil Detectado: Striker")
-              
+        else:              
               vetorStriker = self.model.escalaStriker.transform([razaoUsuario])
               subGrupo = self.model.kmeansStriker.predict(vetorStriker)[0]
               
