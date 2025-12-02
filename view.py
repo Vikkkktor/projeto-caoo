@@ -25,8 +25,6 @@ class View():
 
         self.root.mainloop()
 
-
-# tela inicial/de inserção 
     def telaInsercaoDados(self):
         self.root.title("DMMA")
         self.frame1 = ctk.CTkFrame(self.background, fg_color="black")
@@ -93,7 +91,6 @@ class View():
         self.root.geometry("800x500")
 
 
-
     def telaDeResultado(self):
         self.frame2 = ctk.CTkFrame(self.background, fg_color="black")
         self.frame2.grid(row=0, column=0, sticky="nsew")
@@ -135,7 +132,7 @@ class View():
          justify="center" )
         self.labelArteMarcial.pack()
 
-        self.botaoGrafico = ctk.CTkButton(self.containerBotao, text="Grafico", width=100, height=30, text_color="#FFFFFF", command="")
+        self.botaoGrafico = ctk.CTkButton(self.containerBotao, text="Grafico", width=100, height=30, text_color="#FFFFFF", command=self.MostrarGrafico)
         self.botaoGrafico.pack()
 
 

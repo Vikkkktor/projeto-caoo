@@ -4,10 +4,10 @@ class Elo2(Elo):
     def __init__(self, model):
      super().__init__(model)
 
-     
     def processamento(self, dados):
         razaoUsuario = self.model.CalcularRazao([dados])[0]
         vetorSG = self.model.escala.transform([razaoUsuario])
+        self.model.usuarioVetorGeral = vetorSG
         grupoSG = self.model.kmeansGeral.predict(vetorSG)[0]
 
         if grupoSG == self.model.idGrappler:              
