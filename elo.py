@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 class Elo:
     def __init__(self, model):
         self.next = None
+        self.model = model
 
     def set_next(self, next):
         self.next = next

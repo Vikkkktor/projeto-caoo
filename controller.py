@@ -18,3 +18,5 @@ class Controller():
 
         self.view.atualizarPagina(self.arteMarcial, self.estilo, self.caminhoGif)
         
+    def MostrarGrafico(self):
+        return self.model.MostrarGrafico()

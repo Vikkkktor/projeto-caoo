@@ -175,10 +175,12 @@ class View():
             self.loop = self.root.after(40, lambda: self.animacao(self.frameAtual))
 
 
-
     def mostrarTelaDeResultado(self):
         self.frame2.tkraise()
         self.root.geometry("800x500")
+
+    def MostrarGrafico(self):
+        self.controller.MostrarGrafico()
 
 
     def enviarDados(self):
